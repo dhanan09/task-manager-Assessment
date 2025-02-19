@@ -18,13 +18,13 @@ app.use("/api/auth",authRoutes);
 
 //Connection to MongoDB
 mongoose
-.connect(process.env.MONGODB_URL,{useNewUrlParser:true,useUnifiedTopology:true})
+.connect(process.env.MONGODB_URL)
 .then(()=>{
-  console.log("Connected to MongDB");
-  app.listen(process.env.PORT,()=>{
-    console.log("Server running on port 5000");
-  });
+  console.log("Connected to MongDB"); 
 })
 .catch((err)=>{
   console.log("Error connection to MongoDB",err);
+});
+app.listen(process.env.PORT,()=>{
+  console.log("Server running on port 5000");
 });

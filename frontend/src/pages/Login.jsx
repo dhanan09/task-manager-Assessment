@@ -14,7 +14,8 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", user);
+      console.log(user);
+      const res = await axios.post("https://task-manager-assessment-bv17.onrender.com/api/auth/login", user);
       alert("Login successful");
       navigate("/tasks");
     } catch (err) {

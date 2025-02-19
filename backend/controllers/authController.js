@@ -30,30 +30,33 @@ exports.register=async(req,res)=>{
 };
 
 //Login Cotroller
-exports.login=async(req,res)=>{
-    const {email,password}=req.body;
+exports.login = async (req, res) => {
+    const { email, password } = req.body;
+    console.log("Login Request:", { email, password });
 
-    try{
-        const user=await User.findOne({email});
-        if(!user){
-            return res.status(400).json({
-                message:"Invalid Credentials"
-            });
+    try {
+        const user = await User.findOne({ email });
+        console.log("Finding User:", user);
+
+        if (!user) {
+            console.log("User not found");
+            return res.status(400).json({ message: "Invalid Credentials" });
         }
 
-        const isMatch= await bcrypt.compare(password,user.password);
+        const isMatch = await bcrypt.compare(password, user.password);
+        console.log("Password Match:", isMatch);
+
         if (!isMatch) {
+            console.log("Password does not match");
             return res.status(400).json({ message: "Invalid credentials" });
         }
 
-        const token = jwt.sign({id:user._id}, process.env.jwt_SECRET, {expiresIn:"1h"});
-        res.status(200).json({
-            message:"Login successfull",token
-        });
-    }
-    catch(err){
-        res.status(500).json({
-            message:"Server Error"
-        });
+        const token = jwt.sign({ id: user._id }, process.env.jwt_SECRET, { expiresIn: "1h" });
+        console.log("Generated Token:", token);
+
+        res.status(200).json({ message: "Login successful", token });
+    } catch (err) {
+        console.error("Server Error:", err);
+        res.status(500).json({ message: "Server Error" });
     }
 };

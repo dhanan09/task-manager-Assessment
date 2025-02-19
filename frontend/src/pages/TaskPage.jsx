@@ -7,7 +7,7 @@ function TaskPage() {
   const [newTask, setNewTask] = useState("");  
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/tasks")
+    axios.get("https://task-manager-assessment-bv17.onrender.com/api/tasks")
       .then((res) => setTasks(res.data))
       .catch((err) => console.error(err));
   }, []);
@@ -15,7 +15,7 @@ function TaskPage() {
   // Add Task
   const addTask = () => {
     if (!newTask) return;
-    axios.post("http://localhost:5000/api/tasks", { title: newTask })
+    axios.post("https://task-manager-assessment-bv17.onrender.com/api/tasks", { title: newTask })
       .then((res) => setTasks([...tasks, res.data]))
       .catch((err) => console.error(err));
     
@@ -25,7 +25,7 @@ function TaskPage() {
   // Toggle Task Completion
 const toggleTaskCompletion = (id, currentStatus) => {
     axios
-      .put(`http://localhost:5000/api/tasks/${id}`, { completed: !currentStatus }) 
+      .put(`https://task-manager-assessment-bv17.onrender.com/api/tasks/${id}`, { completed: !currentStatus }) 
       .then((res) => {
         setTasks((prevTasks) =>
           prevTasks.map((task) =>
@@ -39,7 +39,7 @@ const toggleTaskCompletion = (id, currentStatus) => {
 
   // Delete Task
   const deleteTask = (id) => {
-    axios.delete(`http://localhost:5000/api/tasks/${id}`)  // ✅ Fixed template string
+    axios.delete(`https://task-manager-assessment-bv17.onrender.com/api/tasks/${id}`)  // ✅ Fixed template string
       .then(() => setTasks(tasks.filter((task) => task._id !== id)))
       .catch((err) => console.error(err));
   };
